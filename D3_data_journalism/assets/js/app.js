@@ -1,85 +1,30 @@
-// @TODO: YOUR CODE HERE!
-
-
-// set the dimensions and margins of the graph
-// var margin = {
-//     top: 10, 
-//     right: 30, 
-//     bottom: 30, 
-//     left: 60},
-
-//     width = 460 - margin.left - margin.right,
-//     height = 400 - margin.top - margin.bottom;
-
-// // append the svg object to the body of the page
-// var svg = d3.select("#scatter")
-//   .append("svg")
-//     .attr("width", width + margin.left + margin.right)
-//     .attr("height", height + margin.top + margin.bottom)
-//   .append("g")
-//     .attr("transform",
-//           "translate(" + margin.left + "," + margin.top + ")");
-
-// //Read the data
-// d3.csv("data.csv", function(data) {
-//         // Format the data
-//         data.forEach(function(d) {
-            
-//             d.healthcare = +d.healthcare;
-//             d.poverty = +d.poverty;
-//           });
-// //    console.log(data);
-//   // Add X axis
-//   var xScale = d3.scaleLinear()
-//     .domain(([
-//     	d3.min([0,d3.min(data,function (d) { return d.healthcare })]),
-//     	d3.max([0,d3.max(data,function (d) { return d.healthcare })])
-//     	]))
-//     .range([ 0, width ]);
-//   svg.append("g")
-//     .attr("transform", "translate(0," + height + ")")
-//     .call(d3.axisBottom(x));
-
-//   // Add Y axis
-//   var yScale = d3.scaleLinear()
-//     .domain([
-//     	d3.min([0,d3.min(data,function (d) { return d.poverty })]),
-//     	d3.max([0,d3.max(data,function (d) { return d.poverty })])
-//     	])
-//     .range([ height, 0]);
-//   svg.append("g")
-//     .call(d3.axisLeft(y));
-  
-
-//   });
-//   // Add dots
-//   svg.append('g')
-//     .selectAll("dot")
-//     .data(data)
-//     .enter()
-//     .append("circle")
-//       .attr("cx", function (d) { return xScale(d.healthcare); } )
-//       .attr("cy", function (d) { return yScale(d.poverty); } )
-//       .attr("r", 1.5)
-//       .style("fill", "#69b3a2")
-
-// })
-
-
 
 
 // ----------------------------------------------------
 
+// Load data
+d3.csv('assets/data/data.csv').then(function(data) {
+    
+  // Format the data
+  data.forEach(function(d_var) {
+    d_var.healthcare = +d_var.healthcare;
+    d_var.poverty = +d_var.poverty;
+  });
 
-d3.csv('assets/data/data.csv', function (data) {
+    
+    
     // Variables
     // var body = d3.select('body')
       var margin = { top: 50, right: 50, bottom: 50, left: 50 }
       var h = 500 - margin.top - margin.bottom
-      var w = 500 - margin.left - margin.right
-      var formatPercent = d3.format('.2%')
+      var w = 800 - margin.left - margin.right
+      var formatPercent = d3.format('.2%');
       // Scales
     // var colorScale = d3.scale.category20()
+
+
+
+    // create scales
     var xScale = d3.scaleLinear()
       .domain([
           d3.min([0,d3.min(data,function (d) { return d.healthcare })]),
@@ -107,17 +52,11 @@ d3.csv('assets/data/data.csv', function (data) {
     //     .append('g')
     //       .attr('transform','translate(' + margin.left + ',' + margin.top + ')')
       // X-axis
-      var xAxis = d3.svg.axis()
-        .scale(xScale)
-        .tickFormat(formatPercent)
-        .ticks(5)
-        .orient('bottom')
-    // Y-axis
-      var yAxis = d3.svg.axis()
-        .scale(yScale)
-        .tickFormat(formatPercent)
-        .ticks(5)
-        .orient('left')
+      var xAxis = d3.axisBottom(xScale)
+        // .ticks(5)
+      // Y-axis
+      var yAxis = d3.axisLeft(yScale)
+        // .ticks(5)
     // Circles
     var circles = svg.selectAll('circle')
         .data(data)
@@ -133,7 +72,7 @@ d3.csv('assets/data/data.csv', function (data) {
           d3.select(this)
             .transition()
             .duration(500)
-            .attr('r',20)
+            .attr('r',15)
             .attr('stroke-width',3)
         })
         .on('mouseout', function () {
@@ -143,33 +82,38 @@ d3.csv('assets/data/data.csv', function (data) {
             .attr('r',10)
             .attr('stroke-width',1)
         })
-      .append('title') // Tooltip
-        .text(function (d) { return d.state +
-                             '\nReturn: ' + d.healthcare +
-                             '\nStd. Dev.: ' + d.poverty })
+    //   .append('title') // Tooltip
+    //     .text(function (d) { return d.state +
+    //                          '\nReturn: ' + d.healthcare +
+    //                          '\nStd. Dev.: ' + d.poverty })
     // X-axis
+    
     svg.append('g')
         .attr('class','axis')
         .attr('transform', 'translate(0,' + h + ')')
         .call(xAxis)
-      .append('text') // X-axis Label
-        .attr('class','label')
-        .attr('y',-10)
-        .attr('x',w)
-        .attr('dy','.71em')
-        .style('text-anchor','end')
-        .text('Annualized Standard Deviation')
+        .append('text') // X-axis Label
+      
+      .attr('y',-10)
+      .attr('x',w)
+      .attr('dy','.71em')
+      .style('text-anchor','middle')
+      .attr("fill", "black")
+      .attr("font-size", "80px")
+      .text('Healthcare')
     // Y-axis
     svg.append('g')
         .attr('class', 'axis')
         .call(yAxis)
-      .append('text') // y-axis Label
+        .append('text') // y-axis Label
         .attr('class','label')
         .attr('transform','rotate(-90)')
         .attr('x',0)
         .attr('y',5)
         .attr('dy','.71em')
         .style('text-anchor','end')
-        .text('Annualized Return')
+        .attr("fill", "black")
+        .text('Poverty')
+
   })
   

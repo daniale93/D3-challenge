@@ -41,3 +41,16 @@ body {
 	font-family: sans-serif;
 	font-size: 11px;
 }
+
+.line {
+  fill: none;
+  stroke-width: 2px;
+}
+
+.black {
+  stroke: rgb(0, 0, 0);
+}
+
+.green {
+  stroke: green;
+}
