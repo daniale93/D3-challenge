@@ -58,6 +58,8 @@ d3.csv('assets/data/data.csv').then(function(data) {
       var yAxis = d3.axisLeft(yScale)
         // .ticks(5)
     // Circles
+ 
+
     var circles = svg.selectAll('circle')
         .data(data)
         .enter()
@@ -82,10 +84,8 @@ d3.csv('assets/data/data.csv').then(function(data) {
             .attr('r',10)
             .attr('stroke-width',1)
         })
-    //   .append('title') // Tooltip
-    //     .text(function (d) { return d.state +
-    //                          '\nReturn: ' + d.healthcare +
-    //                          '\nStd. Dev.: ' + d.poverty })
+      .append('title') // Tooltip
+        .text(function (d) { return d.state})
     // X-axis
     
     svg.append('g')
@@ -114,6 +114,7 @@ d3.csv('assets/data/data.csv').then(function(data) {
         .style('text-anchor','end')
         .attr("fill", "black")
         .text('Poverty')
+  
 
   })
   
