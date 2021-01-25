@@ -24,5 +24,5 @@ Using the D3 techniques we taught you in class, create a scatter plot that repre
 * Create and situate your axes and labels to the left and bottom of the chart.
 
 
-
+![alt text](https://github.com/daniale93/D3-challenge/blob/main/D3%20Scatter%20Plot.png?raw=true)
 
